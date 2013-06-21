@@ -59,7 +59,7 @@
                 <td>{{ article.modifyDate|date("d-m-Y") }}</td>
                 <td>{{ article.createDate|date("d-m-Y") }}</td>
                 <td>
-                    <input type="button" value="{{ 'view.edit'|trans({}, 'ESArticle') }}" onclick="" style="padding:4px 8px;color:black;"/>
+                    <input type="button" value="{{ 'view.edit'|trans({}, 'ESArticle') }}" onclick="goToEditPage('{{ article.slug }}')" style="padding:4px 8px;color:black;"/>
                 </td>
             </tr>
         	{% endfor %}
@@ -76,6 +76,14 @@
         var modifyTitlePath = {{ path("elsassseeraiwer_esarticle_article_modifytitle", {"slug": '1234'})|json_encode|raw }};
         var modifyStatusPath = {{ path("elsassseeraiwer_esarticle_article_modifystatus", {"slug": '1234'})|json_encode|raw }};
         var listOrderedPath = {{ path("elsassseeraiwer_esarticle_article_list_1", {"field": field, "way": way})|json_encode|raw }};
+        var viewEditPath = {{ path("elsassseeraiwer_esarticle_main_view", {"slug": '1234'})|json_encode|raw }};
+
+        function goToEditPage(slug)
+        {
+            var path = viewEditPath.replace('1234',slug);
+
+            window.location.assign(path);
+        }
 
         function modifyStatus(slug, status)
         {

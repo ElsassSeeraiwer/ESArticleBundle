@@ -28,6 +28,9 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array('en', 'fr'))
                 ->end()
+                ->arrayNode('content_css')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
 
