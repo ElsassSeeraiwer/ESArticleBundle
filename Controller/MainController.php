@@ -37,12 +37,12 @@ class MainController extends Controller
 
     /**
      * @Route("/{key}/embedded/")
-     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
+     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article", options={"key" = "key"})
      * @Template("ElsassSeeraiwerESArticleBundle:Main:embedded.html.twig")
      */
-    public function embeddedByKeyAction(Article $article, $jQuery = true, $tinyMCE = true)
+    public function embeddedByKeyAction(Article $article)
     {
-        return $this->embeddedProcess($article, $jQuery, $tinyMCE);
+        return $this->embeddedProcess($article);
     }
 
     /**
@@ -50,13 +50,18 @@ class MainController extends Controller
      * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
      * @Template("ElsassSeeraiwerESArticleBundle:Main:embedded.html.twig")
      */
-    public function embeddedBySlugAction(Article $article, $jQuery = true, $tinyMCE = true)
+    public function embeddedBySlugAction(Article $article)
     {
-        return $this->embeddedProcess($article, $jQuery, $tinyMCE);
+        return $this->embeddedProcess($article);
     }
 
-    private function embeddedProcess(Article $article, $jQuery = true, $tinyMCE = true)
+    private function embeddedProcess(Article $article)
     {
+        $request = $this->getRequest();
+        $jQuery = ($request->attributes->get('jquery') == null)? true : $request->attributes->get('jquery');
+        $tinyMCE = ($request->attributes->get('tinymce') == null)? true : $request->attributes->get('tinymce');
+        $classes = $request->attributes->get('class');
+
         $Container = $this->get('service_container');
 
         $config = $Container->getParameter('elsass_seeraiwer_es_article.config');
@@ -69,7 +74,8 @@ class MainController extends Controller
             'selectedDomain'    => $domain,
             'jQuery'            => $jQuery,
             'tinyMCE'           => $tinyMCE,
-            'content_css'       => $content_css
+            'content_css'       => $content_css,
+            'classes'           => $classes
         );
     }
 }

@@ -13,7 +13,7 @@
 		    inline: true,
             content_css: "{{ content_css|join(', ') }}",
             theme : 'modern',
-            keep_styles: true,
+            //keep_styles: true,
             height : 300,
             plugins: "hr link table save print anchor searchreplace fullscreen charmap visualblocks image media nonbreaking autolink advlist contextmenu",
             toolbar1: "save | undo redo | removeformat | styleselect | fullscreen print | cut copy paste | searchreplace | hr anchor link table charmap visualblocks nonbreaking",
@@ -35,7 +35,7 @@
                         $(self).parent().prepend('<div class="alert-message success">Translation was saved.</div>');
                     },
                     complete: function() {
-                        window.location.reload()
+                        //window.location.reload()
                     }
                 });
             },
@@ -45,13 +45,14 @@
                 {title: 'Titre 3', block: 'h4'},
                 {title: 'Important', inline: 'span', styles: {color: '#ff0000'}},
                 {title: 'Paragraphe important', block: 'p', classes: 'article'},
+                {title: 'Paragraphe normal', block: 'p'},
             ]
 		});
     </script>
 {% endblock %}
 
 {% block body %}
-<article class="editable" style="margin-top:50px;" data-id="{{ article.key }}">
+<article class="editable {{ classes|default('') }}" style="margin-top:50px;" data-id="{{ article.key }}">
 	{{ article.key|trans({}, 'articles')|raw }}
 </article>
 {% endblock %}

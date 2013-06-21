@@ -15,7 +15,7 @@
 	    inline: true,
         content_css: "{{ content_css|join(', ') }}",
         theme : 'modern',
-        keep_styles: true,
+        //keep_styles: true,
         plugins: "hr link table save print anchor searchreplace fullscreen charmap visualblocks image media nonbreaking autolink advlist contextmenu",
         toolbar1: "save | undo redo | removeformat | styleselect | fullscreen print | cut copy paste | searchreplace | hr anchor link table charmap visualblocks nonbreaking",
         toolbar2: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | subscript superscript",
@@ -46,9 +46,10 @@
             {title: 'Titre 3', block: 'h4'},
             {title: 'Important', inline: 'span', styles: {color: '#ff0000'}},
             {title: 'Paragraphe important', block: 'p', classes: 'article'},
+            {title: 'Paragraphe normal', block: 'p'},
         ]
 	});
 </script>
-<article class="editable" data-id="{{ article.key }}">
+<article class="editable {{ classes|default('') }}" data-id="{{ article.key }}">
 	{{ article.key|trans({}, 'articles')|raw }}
 </article>
