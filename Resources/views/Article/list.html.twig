@@ -1,0 +1,172 @@
+{% extends "ElsassSeeraiwerESArticleBundle::base.html.twig" %}
+
+{% block body %}
+	<h1>{{ 'article.liste.h1'|trans({}, 'ESArticle') }}</h1>
+
+	{{ render(controller('ElsassSeeraiwerESArticleBundle:Article:new')) }}
+
+	<h2>{{ 'article.liste.h2'|trans({}, 'ESArticle') }}</h2>
+
+	<table style="margin-top: 15px;">
+        <thead>
+            <tr>
+                <th width="55%">
+                    <div style="display:block;cursor:pointer;" onclick="sortTable('title');">
+                        {{ 'article.liste.title'|trans({}, 'ESArticle') }}
+                        <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC title" style="float:right;" />
+                        <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC title" style="float:right;" />
+                    </div>
+                </th>
+                <th width="15%">
+                    <div style="display:block;cursor:pointer;" onclick="sortTable('status');">
+                        {{ 'article.liste.status'|trans({}, 'ESArticle') }}
+                        <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC status" style="float:right;" />
+                        <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC status" style="float:right;" />
+                    </div>
+                </th>
+                <th width="10%">
+                    <div style="display:block;cursor:pointer;" onclick="sortTable('modifyDate');">
+                        {{ 'article.liste.majdate'|trans({}, 'ESArticle') }}
+                        <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC modifyDate" style="float:right;" />
+                        <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC modifyDate" style="float:right;" />
+                    </div>
+                </th>
+                <th width="10%">
+                    <div style="display:block;cursor:pointer;" onclick="sortTable('createDate');">
+                        {{ 'article.liste.creadate'|trans({}, 'ESArticle') }}
+                        <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC createDate" style="float:right;" />
+                        <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC createDate" style="float:right;" />
+                    </div>
+                </th>
+                <th width="10%">{{ 'article.liste.actions'|trans({}, 'ESArticle') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for article in articles %}
+        	<tr>
+                <td>
+                    <input data-slug="{{ article.slug }}" data-origin="{{ article.title }}" style="width:95%;" type="text" value="{{ article.title }}" name="{{ article.id }}_title" id="{{ article.key }}_title" class="editTitleForm"/>
+                </td>
+                <td>
+                    <input type="button" value="{{ 'draft'|trans({}, 'ESArticle') }}" onclick="modifyStatus('{{ article.slug }}', 'draft')" 
+                        style="width:65px;margin-bottom:5px;color:black;{% if article.status == 'draft' %}background-color:red{% endif %}"/>
+                    <input type="button" value="{{ 'proposed'|trans({}, 'ESArticle') }}" onclick="modifyStatus('{{ article.slug }}', 'proposed')" 
+                        style="width:65px;margin-bottom:5px;color:black;{% if article.status == 'proposed' %}background-color:orange{% endif %}"/>
+                    <input type="button" value="{{ 'published'|trans({}, 'ESArticle') }}" onclick="modifyStatus('{{ article.slug }}', 'published')" 
+                        style="width:65px;margin-bottom:5px;color:black;{% if article.status == 'published' %}background-color:green{% endif %}"/>
+                    {#{ article.status|trans({}, 'ESArticle') }#}
+                </td>
+                <td>{{ article.modifyDate|date("d-m-Y") }}</td>
+                <td>{{ article.createDate|date("d-m-Y") }}</td>
+                <td>
+                    <input type="button" value="{{ 'view.edit'|trans({}, 'ESArticle') }}" onclick="" style="padding:4px 8px;color:black;"/>
+                </td>
+            </tr>
+        	{% endfor %}
+        </tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var currentField = '{{ field }}';
+        var currentWay = '{{ way }}';
+
+        var modifyTitlePath = {{ path("elsassseeraiwer_esarticle_article_modifytitle", {"slug": '1234'})|json_encode|raw }};
+        var modifyStatusPath = {{ path("elsassseeraiwer_esarticle_article_modifystatus", {"slug": '1234'})|json_encode|raw }};
+        var listOrderedPath = {{ path("elsassseeraiwer_esarticle_article_list_1", {"field": field, "way": way})|json_encode|raw }};
+
+        function modifyStatus(slug, status)
+        {
+            var path = modifyStatusPath.replace('1234',slug);
+
+            $.ajax(path, {
+                type: 'POST',
+                data: {'status': status},
+                complete: function() {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function sortTable(selectedField)
+        {
+            $('img.sortImg').hide()
+            if(currentField == selectedField)
+            {
+                if(currentWay == 'ASC')
+                {
+                    listOrderedPath = listOrderedPath.replace(currentWay,'DESC');
+                    currentWay = 'DESC';
+                }
+                else 
+                {
+                    listOrderedPath = listOrderedPath.replace(currentWay,'ASC');
+                    currentWay = 'ASC';
+                }
+            }
+            else
+            {
+                listOrderedPath = listOrderedPath.replace(currentField,selectedField);
+                currentField = selectedField;
+                listOrderedPath = listOrderedPath.replace(currentWay,'ASC');
+                currentWay = 'ASC';
+            }
+
+            $('img.sortImg.'+currentWay+'.'+currentField).show();
+
+
+            
+            window.location.assign(listOrderedPath);
+        }
+
+        $(document).ready(function() {
+
+            $('img.sortImg').hide()
+            $('img.sortImg.'+currentWay+'.'+currentField).show();
+
+            $('input.editTitleForm')
+                .blur(function() {
+                    var self = this;
+                    var newtitle = $(self).val();
+                    var slug = $(this).data('slug');
+                    var origin = $(this).data('origin');
+                    var path = modifyTitlePath.replace('1234',slug);
+
+                    if(origin == newtitle)return false;
+
+                    $(this).data('origin', newtitle);
+
+                    $.ajax(path, {
+                        type: 'POST',
+                        data: {'title': newtitle},
+                        error: function() {
+                            $(self).parent().prepend('<div class="alert-message error">Title could not be saved</div>');
+                        },
+                        success: function() {
+                            $(self).parent().prepend('<div class="alert-message success">Title was saved.</div>');
+                        },
+                        complete: function() {
+                            var parent = $(self).parent();
+                            $(self).data('timeoutId', setTimeout(function() {
+                                $(self).data('timeoutId', undefined);
+                                parent.children('.alert-message').fadeOut(300, function() { $(this).remove(); });
+                            }, 3000));
+                        }
+                    });
+                })
+                .focus(function() {
+                    this.select();
+                    
+                    var timeoutId = $(this).data('timeoutId');
+                    if (timeoutId) {
+                        clearTimeout(timeoutId);
+                        $(this).data('timeoutId', undefined);
+                    }
+                    
+                    $(this).parent().children('.alert-message').remove();
+                })
+        });
+    </script>
+{% endblock %}

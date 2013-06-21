@@ -1,0 +1,20 @@
+article.liste.h1: Articles
+article.liste.h2: Liste
+article.new.h2: Créer un nouvel article
+
+article.liste.key: ID
+article.liste.title: "Titre (utilisé dans l'url)"
+article.liste.status: Status
+article.liste.majdate: Dernière MàJ
+article.liste.creadate: Date de création
+article.liste.actions: Actions
+
+article.liste.title.modify.button: Valider
+
+form.new.key: ID
+form.new.title: Titre
+
+draft: Brouillon
+proposed: Proposé
+published: Publié
+view.edit: Voir/Editer

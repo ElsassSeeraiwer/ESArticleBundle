@@ -1,0 +1,25 @@
+{
+    "name": "elsass-seeraiwer/article-bundle",
+    "description": "Symfony ElsassSeeraiwer/ESArticleBundle",
+    "license": "MIT",
+    "require": {
+        "jms/translation-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle": "1.1.*@dev"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:ElsassSeeraiwer/JMSTranslationBundle.git"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Eyermann Kévin",
+            "email": "kevin.eyermann@ign.fr"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "ElsassSeeraiwer\\ESArticleBundle": "" }
+    },
+    "target-dir": "ElsassSeeraiwer/ESArticleBundle"
+}

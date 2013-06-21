@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}ElsassSeeraiwerESArticleBundle{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset("bundles/elsassseeraiweresarticle/css/bootstrap.css") }}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset("bundles/elsassseeraiweresarticle/css/layout.css") }}" />
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        {% block topjavascripts %}{% endblock %}
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container">
+                    <h3><a href="{{ path("elsassseeraiwer_esarticle_article_list") }}" class="logo">ElsassSeeraiwer - ArticleBundle</a></h3>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+        <script language="javascript" type="text/javascript" src="{{ asset("bundles/elsassseeraiweresarticle/js/jquery.min.js") }}"></script>
+        <script src="{{ asset('bundles/elsassseeraiweresarticle/js/tinymce/tinymce.min.js') }}"></script>
+        <script src="{{ asset('bundles/elsassseeraiweresarticle/js/tinymce/jquery.tinymce.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,20 @@
+article.liste.h1: Articles
+article.liste.h2: List
+article.new.h2: Create new
+
+article.liste.key: ID
+article.liste.title: Title (used for url)
+article.liste.status: Status
+article.liste.majdate: Last update
+article.liste.creadate: Creation date
+article.liste.actions: Actions
+
+article.liste.title.modify.button: Valid
+
+form.new.key: ID
+form.new.title: Title
+
+draft: Draft
+proposed: Proposed
+published: Published
+view.edit: View/Edit
