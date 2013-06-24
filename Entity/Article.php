@@ -24,14 +24,6 @@ class Article
     private $id;
 
     /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"title"}, updatable=false)
-     * @ORM\Column(name="key", type="string", length=255, unique=true)
-     */
-    private $key;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="create_date", type="datetime")
@@ -48,7 +40,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="text", nullable=true)
+     * @ORM\Column(name="title", type="text")
      */
     private $title;
 
@@ -64,6 +56,15 @@ class Article
      * @ORM\Column(length=255, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ArticleTranslation", mappedBy="article")
+     **/
+    private $trans;
+
+    public function __construct() {
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -197,5 +198,51 @@ class Article
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Add trans
+     *
+     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation $trans
+     * @return Article
+     */
+    public function addTran(\ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation $trans)
+    {
+        $this->trans[] = $trans;
+    
+        return $this;
+    }
+
+    /**
+     * Remove trans
+     *
+     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation $trans
+     */
+    public function removeTran(\ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation $trans)
+    {
+        $this->trans->removeElement($trans);
+    }
+
+    /**
+     * Get trans
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrans()
+    {
+        return $this->trans;
     }
 }

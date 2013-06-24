@@ -20,7 +20,7 @@ use JMS\TranslationBundle\Util\FileUtils;
 use JMS\DiExtraBundle\Annotation as DI;
 
 /**
- * @Route("/article")
+ * @Route("/article_old")
  */
 class ArticleController extends ContainerAware
 {

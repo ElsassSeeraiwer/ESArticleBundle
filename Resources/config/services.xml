@@ -11,5 +11,12 @@
 
     <services>
         <service id="elsass_seeraiwer_es_article" class="%elsass_seeraiwer_es_article.article.class%"></service>
+
+        <service id="elsass_seeraiwer_es_article.twig.article_twig_extension" class="ElsassSeeraiwer\ESArticleBundle\Twig\ArticleExtension">
+            <tag name="twig.extension" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
     </services>
 </container>

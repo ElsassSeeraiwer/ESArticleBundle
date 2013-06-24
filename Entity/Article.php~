@@ -2,6 +2,7 @@
 
 namespace ElsassSeeraiwer\ESArticleBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="es_article")
  * @ORM\Entity(repositoryClass="ElsassSeeraiwer\ESArticleBundle\Entity\ArticleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Article
 {
@@ -20,13 +22,6 @@ class Article
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="key", type="string", length=255)
-     */
-    private $key;
 
     /**
      * @var \DateTime
@@ -45,7 +40,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="text")
+     * @ORM\Column(name="title", type="text", nullable=true)
      */
     private $title;
 
@@ -56,6 +51,37 @@ class Article
      */
     private $status;
 
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ArticleTranslation", mappedBy="article")
+     **/
+    private $trans;
+
+    public function __construct() {
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedValue()
+    {
+        $this->createDate = new \DateTime();
+        $this->modifyDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setModifiedValue()
+    {
+        $this->modifyDate = new \DateTime();
+    }
 
     /**
      * Get id
@@ -65,19 +91,6 @@ class Article
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set key
-     *
-     * @param string $key
-     * @return Article
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-    
-        return $this;
     }
 
     /**
@@ -157,5 +170,33 @@ class Article
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Article
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
