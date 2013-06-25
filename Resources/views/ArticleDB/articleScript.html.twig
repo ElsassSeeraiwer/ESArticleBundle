@@ -15,16 +15,16 @@
         	tinymce.init({
         	    selector: "article.editable",
         	    inline: true,
-                content_css: "{{ content_css|join(', ') }}",
+                content_css: "{{ tinymce.content_css|join(', ') }}",
                 theme : 'modern',
                 //keep_styles: true,
-                plugins: "hr link table save print anchor searchreplace fullscreen charmap visualblocks image media nonbreaking autolink advlist contextmenu",
-                toolbar1: "save | undo redo | removeformat | styleselect | fullscreen print | cut copy paste | searchreplace | hr anchor link table charmap visualblocks nonbreaking",
-                toolbar2: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | subscript superscript",
-                contextmenu: "bold italic underline strikethrough | link image inserttable | cell row column deletetable",
-                tools: "inserttable",
-                nonbreaking_force_tab: true,
-                save_enablewhendirty: true,
+                plugins: "{{ tinymce.plugin }}",
+                toolbar1: "{{ tinymce.toolbar1 }}",
+                toolbar2: "{{ tinymce.toolbar2 }}",
+                contextmenu: "{{ tinymce.contextmenu }}",
+                tools: "{{ tinymce.tools }}",
+                nonbreaking_force_tab: {{ tinymce.nonbreaking_force_tab }},
+                save_enablewhendirty: {{ tinymce.save_enablewhendirty }},
                 save_onsavecallback: function() {
                     tinymce.triggerSave();
                     var path = updateContentPath.replace('SLUG',$('#'+this.id).data('slug'));
@@ -42,15 +42,8 @@
                             //window.location.reload()
                         }
                     });
-                },
-                style_formats : [
-                    {title: 'Titre 1', block: 'h2'},
-                    {title: 'Titre 2', block: 'h3'},
-                    {title: 'Titre 3', block: 'h4'},
-                    {title: 'Important', inline: 'span', styles: {color: '#ff0000'}},
-                    {title: 'Paragraphe important', block: 'p', classes: 'article'},
-                    {title: 'Paragraphe normal', block: 'p'},
-                ]
+                }
+{% if tinymce.style_formats != '' %},style_formats : {{ tinymce.style_formats|raw }}{% endif %}
         	});
         });
     </script>

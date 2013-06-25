@@ -36,14 +36,32 @@ class ArticleExtension extends \Twig_Extension
         );
     }
 
+    public function getGlobals()
+    {
+        return array(
+            'tinymce' => array(
+                //'selector' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.selector'),
+                'content_css' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.content_css'),
+                'plugin' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.plugin'),
+                'toolbar1' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.toolbar1'),
+                'toolbar2' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.toolbar2'),
+                'contextmenu' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.contextmenu'),
+                'tools' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.tools'),
+                'nonbreaking_force_tab' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.nonbreaking_force_tab'),
+                'save_enablewhendirty' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.save_enablewhendirty'),
+                'style_formats' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.style_formats'),
+            ),
+        );
+    }
+
     public function getESArticleScript($env, $authorized_role = '', $jquery = true, $tinymce = true)
     {
-        $content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
+        //$content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
 
         $content = $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:articleScript.html.twig', array(
             'authorized_role'   => $authorized_role,
-            'content_css'       => $content_css,
+            //'content_css'       => $content_css,
             'jQuery'            => $jquery,
             'tinyMCE'           => $tinymce
         ));

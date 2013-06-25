@@ -29,6 +29,16 @@ class ElsassSeeraiwerESArticleExtension extends Extension
         $container->setParameter('elsass_seeraiwer_es_article.domain', $config['domain']);
         $container->setParameter('elsass_seeraiwer_es_article.default_authorized_role', $config['default_authorized_role']);
         $container->setParameter('elsass_seeraiwer_es_article.locales', $config['locales']);
-        $container->setParameter('elsass_seeraiwer_es_article.content_css', $config['content_css']);
+
+        //$container->setParameter('elsass_seeraiwer_es_article.tinymce.selector', $config['tinymce']['selector']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.content_css', $config['tinymce']['content_css']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.plugin', $config['tinymce']['plugin']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.toolbar1', $config['tinymce']['toolbar1']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.toolbar2', $config['tinymce']['toolbar2']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.contextmenu', $config['tinymce']['contextmenu']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.tools', $config['tinymce']['tools']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.nonbreaking_force_tab', $config['tinymce']['nonbreaking_force_tab']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.save_enablewhendirty', $config['tinymce']['save_enablewhendirty']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.style_formats', trim($config['tinymce']['style_formats']));
     }
 }
