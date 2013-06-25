@@ -3,15 +3,8 @@
     "description": "Symfony ElsassSeeraiwer/ESArticleBundle",
     "license": "MIT",
     "require": {
-        "jms/translation-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "1.1.*@dev"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:ElsassSeeraiwer/JMSTranslationBundle.git"
-        }
-    ],
     "authors": [
         {
             "name": "Eyermann Kévin",
