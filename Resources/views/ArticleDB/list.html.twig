@@ -3,8 +3,6 @@
 {% block body %}
 	<h1>{{ 'article.liste.h1'|trans({}, 'ESArticle') }}</h1>
 
-	<p>{{ 'premier-article'|article }}</p>
-
 	{{ render(controller('ElsassSeeraiwerESArticleBundle:ArticleDB:add')) }}
 
 	<h2>{{ 'article.liste.h2'|trans({}, 'ESArticle') }}</h2>
@@ -75,12 +73,20 @@
         var currentField = '{{ field }}';
         var currentWay = '{{ way }}';
         var listOrderedPath = {{ path("elsassseeraiwer_esarticle_articledb_list_ordered", {"field": field, "way": way})|json_encode|raw }};
-        var modifyStatusPath = {{ path("elsassseeraiwer_esarticle_articledb_modifystatus", {"slug": 'STATUS'})|json_encode|raw }};
-        var modifyTitlePath = {{ path("elsassseeraiwer_esarticle_articledb_modifytitle", {"slug": 'TITLE'})|json_encode|raw }};
+        var modifyStatusPath = {{ path("elsassseeraiwer_esarticle_articledb_modifystatus", {"slug": 'SLUG'})|json_encode|raw }};
+        var modifyTitlePath = {{ path("elsassseeraiwer_esarticle_articledb_modifytitle", {"slug": 'SLUG'})|json_encode|raw }};
+        var viewEditPath = {{ path('elsassseeraiwer_esarticle_articledb_get', {'slug': 'SLUG'})|json_encode|raw }};
+
+        function goToEditPage(slug)
+        {
+            var path = viewEditPath.replace('SLUG',slug);
+
+            window.location.assign(path);
+        }
 
         function modifyStatus(slug, status)
         {
-            var path = modifyStatusPath.replace('STATUS',slug);
+            var path = modifyStatusPath.replace('SLUG',slug);
 
             $.ajax(path, {
                 type: 'POST',
@@ -132,7 +138,7 @@
                     var newtitle = $(self).val();
                     var slug = $(this).data('slug');
                     var origin = $(this).data('origin');
-                    var path = modifyTitlePath.replace('TITLE',slug);
+                    var path = modifyTitlePath.replace('SLUG',slug);
 
                     if(origin == newtitle)return false;
 
@@ -145,14 +151,7 @@
                             $(self).parent().prepend('<div class="alert-message error">Title could not be saved</div>');
                         },
                         success: function() {
-                            $(self).parent().prepend('<div class="alert-message success">Title was saved.</div>');
-                        },
-                        complete: function() {
-                            var parent = $(self).parent();
-                            $(self).data('timeoutId', setTimeout(function() {
-                                $(self).data('timeoutId', undefined);
-                                parent.children('.alert-message').fadeOut(300, function() { $(this).remove(); });
-                            }, 3000));
+                            window.location.reload();
                         }
                     });
                 })

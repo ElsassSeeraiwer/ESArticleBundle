@@ -27,6 +27,7 @@ class ElsassSeeraiwerESArticleExtension extends Extension
 
         $container->setParameter('elsass_seeraiwer_es_article.config', $config['config']);
         $container->setParameter('elsass_seeraiwer_es_article.domain', $config['domain']);
+        $container->setParameter('elsass_seeraiwer_es_article.default_authorized_role', $config['default_authorized_role']);
         $container->setParameter('elsass_seeraiwer_es_article.locales', $config['locales']);
         $container->setParameter('elsass_seeraiwer_es_article.content_css', $config['content_css']);
     }

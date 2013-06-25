@@ -58,12 +58,18 @@ class Article
     private $slug;
 
     /**
+     * @Gedmo\Slug(fields={"title"}, updatable=false)
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $fixedSlug;
+
+    /**
      * @ORM\OneToMany(targetEntity="ArticleTranslation", mappedBy="article")
      **/
     private $trans;
 
     public function __construct() {
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->trans = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -244,5 +250,42 @@ class Article
     public function getTrans()
     {
         return $this->trans;
+    }
+
+    /**
+     * Get transByLocale
+     *
+     * @param string $locale
+     * @return \ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation
+     */
+    public function getTransByLocale($locale)
+    {
+        foreach ($this->trans as $articleTrans) {
+            if($articleTrans->getLocale() == $locale)return $articleTrans;
+        }
+        return false;
+    }
+
+    /**
+     * Set fixedSlug
+     *
+     * @param string $fixedSlug
+     * @return Article
+     */
+    public function setFixedSlug($fixedSlug)
+    {
+        $this->fixedSlug = $fixedSlug;
+    
+        return $this;
+    }
+
+    /**
+     * Get fixedSlug
+     *
+     * @return string 
+     */
+    public function getFixedSlug()
+    {
+        return $this->fixedSlug;
     }
 }

@@ -36,16 +36,13 @@ class ArticleExtension extends \Twig_Extension
         );
     }
 
-    public function getESArticleScript($env, $authorized_role = 'ROLE_SUPER_ADMIN', $jquery = true, $tinymce = true)
+    public function getESArticleScript($env, $authorized_role = '', $jquery = true, $tinymce = true)
     {
-        $config = $this->container->getParameter('elsass_seeraiwer_es_article.config');
-        $domain = $this->container->getParameter('elsass_seeraiwer_es_article.domain');
         $content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
+        if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
 
         $content = $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:articleScript.html.twig', array(
             'authorized_role'   => $authorized_role,
-            'selectedConfig'    => $config,
-            'selectedDomain'    => $domain,
             'content_css'       => $content_css,
             'jQuery'            => $jquery,
             'tinyMCE'           => $tinymce
@@ -57,6 +54,12 @@ class ArticleExtension extends \Twig_Extension
     public function getArticle($env, $string, $classes = '')
     {
         $article = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findOneBySlug($string);
+        if (!$article) {
+            $article = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findOneByFixedSlug($string);
+            if (!$article) {
+                throw $this->createNotFoundException('Article not found');
+            }
+        }
 
         $content = $this->getArticleContent($string, $article);
 
@@ -71,7 +74,12 @@ class ArticleExtension extends \Twig_Extension
     {
         if($article == null)$article = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findOneBySlug($string);
 
-        if(!$article)return 'no article called "'.$string.'"';
+        if (!$article) {
+            $article = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findOneByFixedSlug($string);
+            if (!$article) {
+                throw $this->createNotFoundException('Article not found');
+            }
+        }
 
         $trans = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:ArticleTranslation')
             ->findOneBy(array(

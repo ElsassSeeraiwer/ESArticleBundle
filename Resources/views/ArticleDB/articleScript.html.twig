@@ -9,8 +9,7 @@
     {% endif %} 
 
     <script language="javascript" type="text/javascript">
-        /*var updateMessagePath = {{ path("jms_translation_update_message", {"config": selectedConfig, "domain": selectedDomain, "locale": app.request.locale})|json_encode|raw }};*/
-
+        var updateContentPath = {{ path("elsassseeraiwer_esarticle_articledb_modifycontent", {'slug': 'SLUG'})|json_encode|raw }};
 
         $(document).ready(function() {
         	tinymce.init({
@@ -28,10 +27,11 @@
                 save_enablewhendirty: true,
                 save_onsavecallback: function() {
                     tinymce.triggerSave();
-                    /*$.ajax(updateMessagePath + '?id=' + encodeURIComponent($('#'+this.id).data('id')), {
+                    var path = updateContentPath.replace('SLUG',$('#'+this.id).data('slug'));
+
+                    $.ajax(path, {
                         type: 'POST',
-                        headers: {'X-HTTP-METHOD-OVERRIDE': 'PUT'},
-                        data: {'_method': 'PUT', 'message': $('#'+this.id).html()},
+                        data: {'content': $('#'+this.id).html(), 'locale': '{{ app.request.locale }}'},
                         error: function() {
                             $(self).parent().prepend('<div class="alert-message error">Translation could not be saved</div>');
                         },
@@ -41,7 +41,7 @@
                         complete: function() {
                             //window.location.reload()
                         }
-                    });*/
+                    });
                 },
                 style_formats : [
                     {title: 'Titre 1', block: 'h2'},

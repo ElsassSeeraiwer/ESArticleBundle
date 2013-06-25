@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('config')->defaultValue('app')->end()
                 ->scalarNode('domain')->defaultValue('articles')->end()
+                ->scalarNode('default_authorized_role')->defaultValue('ROLE_SUPER_ADMIN')->end()
                 ->arrayNode('locales')
                     ->prototype('scalar')->end()
                     ->defaultValue(array('en', 'fr'))

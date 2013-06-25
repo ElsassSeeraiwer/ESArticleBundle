@@ -1,0 +1,10 @@
+{% if is_granted(authorized_role|default('ROLE_SUPER_ADMIN')) %}
+	<div class="eSeeraiwer-toolbar-block" style="float:right;">
+	    <div class="eSeeraiwer-toolbar-icon">
+	        <a href="{{ path('elsassseeraiwer_esarticle_articledb_list') }}">
+	            <img width="0" height="28" alt="" src="">
+	            <span>Article</span>
+	        </a>
+	    </div>
+	</div>
+{% endif %}

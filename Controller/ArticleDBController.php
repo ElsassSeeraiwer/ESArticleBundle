@@ -81,6 +81,27 @@ class ArticleDBController extends Controller
     }
 
     /**
+     * @Route("/modify/{slug}/content/")
+     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
+     * @Template()
+     * @Method("POST")
+     */
+    public function modifyContentAction(Request $request, Article $article)
+    {
+        $content = $this->getRequest()->request->get('content');
+        $locale = $this->getRequest()->request->get('locale');
+
+        $articleTranslation = $article->getTransByLocale($locale);
+        $articleTranslation->setContent($content);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($articleTranslation);
+        $em->flush();
+
+        return new Response("OK");
+    }
+
+    /**
      * @Route("/modify/{slug}/title/")
      * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
      * @Template()

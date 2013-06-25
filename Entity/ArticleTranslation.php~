@@ -59,7 +59,7 @@ class ArticleTranslation
 
     /**
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="trans")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
      **/
     private $article;
 
@@ -70,7 +70,6 @@ class ArticleTranslation
     {
         $this->createDate = new \DateTime();
         $this->modifyDate = new \DateTime();
-        $usr= $this->get('security.context')->getToken()->getUser();
     }
 
     /**
@@ -79,7 +78,6 @@ class ArticleTranslation
     public function setModifiedValue()
     {
         $this->modifyDate = new \DateTime();
-        $usr= $this->get('security.context')->getToken()->getUser();
     }
 
     /**
@@ -205,5 +203,28 @@ class ArticleTranslation
     public function getLastUsername()
     {
         return $this->lastUsername;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\Article $article
+     * @return ArticleTranslation
+     */
+    public function setArticle(\ElsassSeeraiwer\ESArticleBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+    
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \ElsassSeeraiwer\ESArticleBundle\Entity\Article 
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 }
