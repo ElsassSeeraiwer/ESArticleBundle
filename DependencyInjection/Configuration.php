@@ -29,22 +29,25 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue(array('en', 'fr'))
                 ->end()
-                ->arrayNode('content_css')
-                    ->prototype('scalar')->end()
-                ->end()
                 ->arrayNode('tinymce')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        //->scalarNode('selector')->defaultValue('article.editable')->cannotBeEmpty()->end()
-                        ->scalarNode('content_css')->defaultValue('')->end()
+                        ->arrayNode('content_css')->prototype('scalar')->end()->end()
                         ->scalarNode('plugin')->defaultValue('hr link table save print anchor searchreplace fullscreen charmap visualblocks image media nonbreaking autolink advlist contextmenu')->cannotBeEmpty()->end()
-                        ->scalarNode('toolbar1')->defaultValue('')->cannotBeEmpty()->end()
-                        ->scalarNode('toolbar2')->defaultValue('')->cannotBeEmpty()->end()
-                        ->scalarNode('contextmenu')->defaultValue('')->cannotBeEmpty()->end()
-                        ->scalarNode('tools')->defaultValue('')->cannotBeEmpty()->end()
+                        ->scalarNode('toolbar1')->defaultValue('save | undo redo | removeformat | styleselect | fullscreen print | cut copy paste | searchreplace | hr anchor link table charmap visualblocks nonbreaking')->cannotBeEmpty()->end()
+                        ->scalarNode('toolbar2')->defaultValue('bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | subscript superscript')->cannotBeEmpty()->end()
+                        ->scalarNode('contextmenu')->defaultValue('bold italic underline strikethrough | link image inserttable | cell row column deletetable')->cannotBeEmpty()->end()
+                        ->scalarNode('tools')->defaultValue('inserttable')->cannotBeEmpty()->end()
                         ->booleanNode('nonbreaking_force_tab')->defaultTrue()->end()
                         ->booleanNode('save_enablewhendirty')->defaultTrue()->end()
-                        ->scalarNode('style_formats')->defaultValue('')->end()
+                        ->scalarNode('style_formats')->defaultValue("[
+                            {title: 'Titre 1', block: 'h2'},
+                            {title: 'Titre 2', block: 'h3'},
+                            {title: 'Titre 3', block: 'h4'},
+                            {title: 'Important', inline: 'span', styles: {color: '#ff0000'}},
+                            {title: 'Paragraphe important', block: 'p', classes: 'important'},
+                            {title: 'Paragraphe normal', block: 'p'}
+                        ]")->end()
                     ->end()
                 ->end()
             ->end()
