@@ -12,39 +12,51 @@
         var updateContentPath = {{ path("elsassseeraiwer_esarticle_articledb_modifycontent", {'slug': 'SLUG'})|json_encode|raw }};
 
         $(document).ready(function() {
-        	tinymce.init({
-        	    selector: "article.editable",
-        	    inline: true,
-                content_css: "{{ tinymce.content_css|join(', ') }}",
-                theme : 'modern',
-                //keep_styles: true,
-                plugins: "{{ tinymce.plugin }}",
-                toolbar1: "{{ tinymce.toolbar1 }}",
-                toolbar2: "{{ tinymce.toolbar2 }}",
-                contextmenu: "{{ tinymce.contextmenu }}",
-                tools: "{{ tinymce.tools }}",
-                nonbreaking_force_tab: {{ tinymce.nonbreaking_force_tab }},
-                save_enablewhendirty: {{ tinymce.save_enablewhendirty }},
-                save_onsavecallback: function() {
-                    tinymce.triggerSave();
-                    var path = updateContentPath.replace('SLUG',$('#'+this.id).data('slug'));
+            articleEditionStatus = window.localStorage.getItem('articleEditionStatus');
+            console.log(articleEditionStatus);
+            if(articleEditionStatus == 1)
+            {
+                $('#articleEditionImgGrey').hide();
+                $('#articleEditionImgGreen').show();
 
-                    $.ajax(path, {
-                        type: 'POST',
-                        data: {'content': $('#'+this.id).html(), 'locale': '{{ app.request.locale }}'},
-                        error: function() {
-                            $(self).parent().prepend('<div class="alert-message error">Translation could not be saved</div>');
-                        },
-                        success: function() {
-                            $(self).parent().prepend('<div class="alert-message success">Translation was saved.</div>');
-                        },
-                        complete: function() {
-                            //window.location.reload()
-                        }
-                    });
-                }
-{% if tinymce.style_formats != '' %},style_formats : {{ tinymce.style_formats|raw }}{% endif %}
-        	});
+                tinymce.init({
+                    selector: "article.editable",
+                    inline: true,
+                    content_css: "{{ tinymce.content_css|join(', ') }}",
+                    theme : 'modern',
+                    //keep_styles: true,
+                    plugins: "{{ tinymce.plugin }}",
+                    toolbar1: "{{ tinymce.toolbar1 }}",
+                    toolbar2: "{{ tinymce.toolbar2 }}",
+                    contextmenu: "{{ tinymce.contextmenu }}",
+                    tools: "{{ tinymce.tools }}",
+                    nonbreaking_force_tab: {{ tinymce.nonbreaking_force_tab }},
+                    save_enablewhendirty: {{ tinymce.save_enablewhendirty }},
+                    save_onsavecallback: function() {
+                        tinymce.triggerSave();
+                        var path = updateContentPath.replace('SLUG',$('#'+this.id).data('slug'));
+
+                        $.ajax(path, {
+                            type: 'POST',
+                            data: {'content': $('#'+this.id).html(), 'locale': '{{ app.request.locale }}'},
+                            error: function() {
+                                $(self).parent().prepend('<div class="alert-message error">Translation could not be saved</div>');
+                            },
+                            success: function() {
+                                $(self).parent().prepend('<div class="alert-message success">Translation was saved.</div>');
+                            },
+                            complete: function() {
+                                //window.location.reload()
+                            }
+                        });
+                    }
+        {% if tinymce.style_formats != '' %},style_formats : {{ tinymce.style_formats|raw }}{% endif %}
+                });
+            }
+            else if(articleEditionStatus == null)
+            {
+                window.localStorage.setItem('articleEditionStatus', 0);
+            }
         });
     </script>
 {% endif %}
