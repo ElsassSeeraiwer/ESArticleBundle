@@ -19,6 +19,7 @@ class ArticleRepository extends EntityRepository
 		$query = $em->createQuery(
 			"SELECT a 
 			FROM ElsassSeeraiwerESArticleBundle:Article a 
+			LEFT JOIN a.tags t
 			ORDER BY a.".$orderField." ".$orderWay);
 
 		$result = $query->getResult();

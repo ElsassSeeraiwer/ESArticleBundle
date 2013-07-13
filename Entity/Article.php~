@@ -295,39 +295,4 @@ class Article
     {
         return $this->fixedSlug;
     }
-
-    /**
-     * Add tags
-     *
-     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags
-     * @return Article
-     */
-    public function addTag(\ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags)
-    {
-        $this->tags[] = $tags;
-        $tags->addArticle($this); // synchronously updating inverse side
-    
-        return $this;
-    }
-
-    /**
-     * Remove tags
-     *
-     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags
-     */
-    public function removeTag(\ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags)
-    {
-        $this->tags->removeElement($tags);
-        $tags->removeArticle($this); // synchronously updating inverse side
-    }
-
-    /**
-     * Get tags
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
 }

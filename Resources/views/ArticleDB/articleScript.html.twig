@@ -8,12 +8,33 @@
         <script src="{{ asset('bundles/jmstranslation/js/tinymce/jquery.tinymce.min.js') }}"></script>
     {% endif %} 
 
+    <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+
     <script language="javascript" type="text/javascript">
         var updateContentPath = {{ path("elsassseeraiwer_esarticle_articledb_modifycontent", {'slug': 'SLUG'})|json_encode|raw }};
+        var modifyTagsPath = {{ path("elsassseeraiwer_esarticle_articledb_modifytags", {"slug": 'SLUG'})|json_encode|raw }};
+
+        function modifyTags(slug)
+        {
+            var tags = $('#'+slug+'_tags').select2("val");
+            var path = modifyTagsPath.replace('SLUG',slug);
+
+            $.ajax(path, {
+                type: 'POST',
+                data: {'tags': tags},
+                complete: function() {
+                    //window.location.reload();
+                }
+            });
+        }
 
         $(document).ready(function() {
             articleEditionStatus = window.localStorage.getItem('articleEditionStatus');
-            console.log(articleEditionStatus);
+
+            $(".editTagsForm").select2({tags:[]});
+            $(".editTagsFormSave").show();
+
             if(articleEditionStatus == 1)
             {
                 $('#articleEditionImgGrey').hide();
@@ -57,6 +78,20 @@
             {
                 window.localStorage.setItem('articleEditionStatus', 0);
             }
+        });
+    </script>
+{% else %}
+    {% if jQuery == true %}
+        <script src="{{ asset("bundles/jmstranslation/js/jquery.min.js") }}"></script>
+    {% endif %}
+
+    <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function() {
+            $(".editTagsForm").remove();
+            $('.editTagsFormSave').remove();
         });
     </script>
 {% endif %}

@@ -10,11 +10,18 @@
 	<table style="margin-top: 15px;">
         <thead>
             <tr>
-                <th width="55%">
+                <th width="35%">
                     <div style="display:block;cursor:pointer;" onclick="sortTable('title');">
                         {{ 'article.liste.title'|trans({}, 'ESArticle') }}
                         <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC title" style="float:right;display:none;" />
                         <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC title" style="float:right;display:none;" />
+                    </div>
+                </th>
+                <th width="20%">
+                    <div style="display:block;cursor:pointer;" onclick="sortTable('tags');">
+                        {{ 'article.liste.tags'|trans({}, 'ESArticle') }}
+                        <img width="12" height="12" title="DESC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDMZSs1IwQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAlSURBVHjaYxAEAwYwKcQABSCOAIRSYEAShFBwZSCeAIRSQBIDAHnLAj81ZwHgAAAAAElFTkSuQmCC" class="sortImg DESC tags" style="float:right;display:none;" />
+                        <img width="12" height="12" title="ASC" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMBAMAAACkW0HUAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfTCw0ELQwmUHCFAAAAB3RJTUUH0wsNBDQKgTKf2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAlQTFRF////AAAAxsbGBNRU4gAAAAF0Uk5TAEDm2GYAAAAmSURBVHjaY2CAAEEFCCXAgAQEBYUglCCKoCBIMYgSQBEEKgZTggBGHQI/pr6SWAAAAABJRU5ErkJggg==" class="sortImg ASC tags" style="float:right;display:none;" />
                     </div>
                 </th>
                 <th width="15%">
@@ -48,6 +55,10 @@
                     <input data-slug="{{ article.slug }}" data-origin="{{ article.title }}" style="width:95%;" type="text" value="{{ article.title }}" name="{{ article.id }}_title" id="{{ article.slug }}_title" class="editTitleForm"/>
                 </td>
                 <td>
+                    <input type="text" data-slug="{{ article.slug }}" data-origin="{{ article.tags|join(',') }}" name="{{ article.id }}_tags" id="{{ article.slug }}_tags" class="editTagsForm" style="width:200px;" value="{{ article.tags|join(',') }}">
+                    <input type="button" value="{{ 'Save'|trans({}, 'ESArticle') }}" onclick="modifyTags('{{ article.slug }}')" style="width:65px;margin:5px 0;color:black;"/>
+                </td>
+                <td>
                     <input type="button" value="{{ 'draft'|trans({}, 'ESArticle') }}" onclick="modifyStatus('{{ article.slug }}', 'draft')" 
                         style="width:65px;margin-bottom:5px;color:black;{% if article.status == 'draft' %}background-color:red{% endif %}"/>
                     <input type="button" value="{{ 'proposed'|trans({}, 'ESArticle') }}" onclick="modifyStatus('{{ article.slug }}', 'proposed')" 
@@ -69,11 +80,14 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
     <script>
         var currentField = '{{ field }}';
         var currentWay = '{{ way }}';
         var listOrderedPath = {{ path("elsassseeraiwer_esarticle_articledb_list_ordered", {"field": field, "way": way})|json_encode|raw }};
         var modifyStatusPath = {{ path("elsassseeraiwer_esarticle_articledb_modifystatus", {"slug": 'SLUG'})|json_encode|raw }};
+        var modifyTagsPath = {{ path("elsassseeraiwer_esarticle_articledb_modifytags", {"slug": 'SLUG'})|json_encode|raw }};
         var modifyTitlePath = {{ path("elsassseeraiwer_esarticle_articledb_modifytitle", {"slug": 'SLUG'})|json_encode|raw }};
         var viewEditPath = {{ path('elsassseeraiwer_esarticle_articledb_get', {'slug': 'SLUG'})|json_encode|raw }};
 
@@ -82,6 +96,20 @@
             var path = viewEditPath.replace('SLUG',slug);
 
             window.location.assign(path);
+        }
+
+        function modifyTags(slug)
+        {
+            var tags = $('#'+slug+'_tags').select2("val");
+            var path = modifyTagsPath.replace('SLUG',slug);
+
+            $.ajax(path, {
+                type: 'POST',
+                data: {'tags': tags},
+                complete: function() {
+                    //window.location.reload();
+                }
+            });
         }
 
         function modifyStatus(slug, status)
@@ -131,6 +159,8 @@
 
         $(document).ready(function() {
             $('img.sortImg.'+currentWay+'.'+currentField).show();
+
+            $(".editTagsForm").select2({tags:[]});
 
             $('input.editTitleForm')
                 .blur(function() {

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use ElsassSeeraiwer\ESArticleBundle\Entity\Article;
+use ElsassSeeraiwer\ESArticleBundle\Entity\Tag;
 use ElsassSeeraiwer\ESArticleBundle\Form\ArticleType;
 use ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation;
 
@@ -133,6 +134,54 @@ class ArticleDBController extends Controller
         $article->setStatus($newStatus);
         
         $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        return new Response("OK");
+    }
+
+    /**
+     * @Route("/modify/{slug}/tags/")
+     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
+     * @Template()
+     * @Method("POST")
+     */
+    public function modifyTagsAction(Request $request, Article $article)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clientTagList = $this->getRequest()->request->get('tags');
+        $serverTags = $article->getTags();
+        $serverTagList = array();
+
+        foreach($serverTags as $serverTag)
+        {
+            $serverTagName = $serverTag->getName();
+            if(!in_array($serverTagName, $clientTagList))
+            {
+                echo 'del: '.$serverTagName.'<br/>';
+                $article->removeTag($serverTag);
+                continue;
+            }
+
+            $key = array_search($serverTagName, $clientTagList);
+            unset($clientTagList[$key]);
+        }
+
+        foreach($clientTagList as $clientTagName)
+        {
+            $newTag = $em->getRepository('ElsassSeeraiwerESArticleBundle:Tag')->findOneByName($clientTagName);
+
+            if(!$newTag)
+            {
+                $newTag = new Tag();
+                $newTag->setName($clientTagName);
+                $em->persist($newTag);
+            }
+
+            $article->addTag($newTag);
+        }
+        
         $em->persist($article);
         $em->flush();
 
