@@ -1,6 +1,7 @@
 <article class="editable {{ classes|default('') }}" data-slug="{{ article.slug }}" id="{{ article.slug }}">
 	{{ content|raw }}
 </article>
+{% if tags == true %}
 <div id="{{ article.slug }}_tags_view" class="articles_tags_view">
 	{% for tag in article.tags %}
 		<a class="btn btn-info" href="#" title="{{ tag }}">#{{ tag }}</a>
@@ -11,3 +12,4 @@
 	<input type="text" data-slug="{{ article.slug }}" data-origin="{{ article.tags|join(',') }}" name="{{ article.id }}_tags" id="{{ article.slug }}_tags" class="editTagsForm" style="width:200px;" value="{{ article.tags|join(',') }}">
 	<input type="button" class="editTagsFormSave" value="{{ 'Save'|trans({}, 'ESArticle') }}" onclick="modifyTags('{{ article.slug }}')" style="display:none;width:65px;margin:5px 0;color:black;"/>
 </div>
+{% endif %}

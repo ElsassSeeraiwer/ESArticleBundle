@@ -8,11 +8,14 @@
         <script src="{{ asset('bundles/jmstranslation/js/tinymce/jquery.tinymce.min.js') }}"></script>
     {% endif %} 
 
-    <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
-    <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+    {% if tags == true %}
+        <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">test
+        <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+    {% endif %} 
 
     <script language="javascript" type="text/javascript">
         var updateContentPath = {{ path("elsassseeraiwer_esarticle_articledb_modifycontent", {'slug': 'SLUG'})|json_encode|raw }};
+        {% if tags == true %}
         var modifyTagsPath = {{ path("elsassseeraiwer_esarticle_articledb_modifytags", {"slug": 'SLUG'})|json_encode|raw }};
 
         function modifyTags(slug)
@@ -28,12 +31,15 @@
                 }
             });
         }
+        {% endif %}
 
         $(document).ready(function() {
             articleEditionStatus = window.localStorage.getItem('articleEditionStatus');
-
+            console.log(articleEditionStatus);
+            {% if tags == true %}
             $(".editTagsForm").select2({tags:[]});
             $(".editTagsFormSave").show();
+            {% endif %}
 
             if(articleEditionStatus == 1)
             {
@@ -85,13 +91,17 @@
         <script src="{{ asset("bundles/jmstranslation/js/jquery.min.js") }}"></script>
     {% endif %}
 
-    <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
-    <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+    {% if tags == true %}
+        <link href="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.css') }}" rel="stylesheet">
+        <script src="{{ asset('bundles/elsassseeraiweresarticle/js/select2-3.4.1/select2.min.js') }}"></script>
+    {% endif %}
 
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
-            $(".editTagsForm").remove();
-            $('.editTagsFormSave').remove();
+            {% if tags == true %}
+                $(".editTagsForm").remove();
+                $('.editTagsFormSave').remove();
+            {% endif %}
         });
     </script>
 {% endif %}

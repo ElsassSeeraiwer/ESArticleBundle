@@ -1,7 +1,7 @@
 {% extends "ElsassSeeraiwerESArticleBundle::base.html.twig" %}
 
 {% block body %}
-{{ slug|article }}
+{{ slug|article('', false) }}
 
-{{ article_script() }}
+{{ article_script('', true, true, false) }}
 {% endblock %}

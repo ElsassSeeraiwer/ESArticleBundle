@@ -54,7 +54,7 @@ class ArticleExtension extends \Twig_Extension
         );
     }
 
-    public function getESArticleScript($env, $authorized_role = '', $jquery = true, $tinymce = true)
+    public function getESArticleScript($env, $authorized_role = '', $jquery = true, $tinymce = true, $tags = true)
     {
         //$content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
@@ -63,13 +63,14 @@ class ArticleExtension extends \Twig_Extension
             'authorized_role'   => $authorized_role,
             //'content_css'       => $content_css,
             'jQuery'            => $jquery,
-            'tinyMCE'           => $tinymce
+            'tinyMCE'           => $tinymce,
+            'tags'              => $tags
         ));
 
         return $content;
     }
 
-    public function getArticle($env, $string, $classes = '')
+    public function getArticle($env, $string, $classes = '', $tags = true)
     {
         $article = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findOneBySlug($string);
         if (!$article) {
@@ -84,7 +85,8 @@ class ArticleExtension extends \Twig_Extension
         return $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:article.html.twig', array(
             'article'           => $article, 
             'content'           => $content,
-            'classes'           => $classes
+            'classes'           => $classes,
+            'tags'              => $tags,
         ));
     }
 
