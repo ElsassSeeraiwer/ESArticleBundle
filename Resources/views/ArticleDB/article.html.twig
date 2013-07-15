@@ -1,4 +1,4 @@
-<article class="editable {{ classes|default('') }}" data-slug="{{ article.slug }}">
+<article class="editable {{ classes|default('') }}" data-slug="{{ article.slug }}" id="{{ article.slug }}">
 	{{ content|raw }}
 </article>
 <div id="{{ article.slug }}_tags_view" class="articles_tags_view">
