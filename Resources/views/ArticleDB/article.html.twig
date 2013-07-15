@@ -1,7 +1,13 @@
 <article class="editable {{ classes|default('') }}" data-slug="{{ article.slug }}">
 	{{ content|raw }}
 </article>
-<div id="{{ article.slug }}_tags" class="articles_tags">
+<div id="{{ article.slug }}_tags_view" class="articles_tags_view">
+	{% for tag in article.tags %}
+		<a class="btn btn-info" href="#" title="{{ tag }}">#{{ tag }}</a>
+	{% endfor %}
+	<a class="btn btn-warning btn-edittags" href="#" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
+</div>
+<div id="{{ article.slug }}_tags_edit" class="articles_tags_edit" style="display:none;">
 	<input type="text" data-slug="{{ article.slug }}" data-origin="{{ article.tags|join(',') }}" name="{{ article.id }}_tags" id="{{ article.slug }}_tags" class="editTagsForm" style="width:200px;" value="{{ article.tags|join(',') }}">
 	<input type="button" class="editTagsFormSave" value="{{ 'Save'|trans({}, 'ESArticle') }}" onclick="modifyTags('{{ article.slug }}')" style="display:none;width:65px;margin:5px 0;color:black;"/>
 </div>
