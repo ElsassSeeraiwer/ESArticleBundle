@@ -82,6 +82,28 @@ class ArticleDBController extends Controller
     }
 
     /**
+     * @Route("/delete/{slug}/")
+     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
+     * @Template()
+     * @Method("POST")
+     */
+    public function removeAction(Request $request, Article $article)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $trans = $article->getTrans();
+        
+        $em->remove($article);
+
+        foreach ($trans as $translation) {
+            $em->remove($translation);
+        }
+
+        $em->flush();
+
+        return new Response("OK");
+    }
+
+    /**
      * @Route("/modify/{slug}/content/")
      * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
      * @Template()

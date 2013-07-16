@@ -8,6 +8,7 @@ article.liste.status: Status
 article.liste.majdate: Last update
 article.liste.creadate: Creation date
 article.liste.actions: Actions
+article.liste.tags: Tag list
 
 article.liste.title.modify.button: Valid
 
@@ -18,3 +19,4 @@ draft: Draft
 proposed: Proposed
 published: Published
 view.edit: View/Edit
+view.delete: Delete

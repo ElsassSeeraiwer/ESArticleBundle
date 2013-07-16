@@ -8,6 +8,7 @@ article.liste.status: Status
 article.liste.majdate: Dernière MàJ
 article.liste.creadate: Date de création
 article.liste.actions: Actions
+article.liste.tags: Liste des tags
 
 article.liste.title.modify.button: Valider
 
@@ -18,3 +19,4 @@ draft: Brouillon
 proposed: Proposé
 published: Publié
 view.edit: Voir/Editer
+view.delete: Supprimer
