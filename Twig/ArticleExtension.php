@@ -59,7 +59,13 @@ class ArticleExtension extends \Twig_Extension
         //$content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
         $tagpath = $this->container->getParameter('elsass_seeraiwer_es_article.tagpath');
-        $tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
+        //$tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
+
+        $tagEntities = $this->em->getRepository('ElsassSeeraiwerESArticleBundle:Tag')->findAll();
+        $taglist = array();
+        foreach ($tagEntities as $tagElem) {
+            $taglist[] = $tagElem->getName();
+        }
 
         $content = $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:articleScript.html.twig', array(
             'authorized_role'   => $authorized_role,
@@ -68,7 +74,8 @@ class ArticleExtension extends \Twig_Extension
             'tinyMCE'           => $tinymce,
             'tags'              => $tags,
             'tagpath'           => $tagpath,
-            'tagpathparams'     => $tagpathparams,
+            'taglist'           => $taglist,
+            //'tagpathparams'     => $tagpathparams,
         ));
 
         return $content;
@@ -86,7 +93,7 @@ class ArticleExtension extends \Twig_Extension
 
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
         $tagpath = $this->container->getParameter('elsass_seeraiwer_es_article.tagpath');
-        $tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
+        //$tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
 
         $content = $this->getArticleContent($string, $article);
 
@@ -97,7 +104,7 @@ class ArticleExtension extends \Twig_Extension
             'tags'              => $tags,
             'authorized_role'   => $authorized_role,
             'tagpath'           => $tagpath,
-            'tagpathparams'     => $tagpathparams,
+            //'tagpathparams'     => $tagpathparams,
         ));
     }
 

@@ -62,7 +62,7 @@ class Tag
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = $this->wd_remove_accents($name);
     
         return $this;
     }
@@ -108,5 +108,19 @@ class Tag
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    private function wd_remove_accents($str, $charset='utf-8')
+    {
+        $str = ereg_replace(' ','-',$str);
+        $str = htmlentities($str, ENT_NOQUOTES, $charset);
+        
+        $str = preg_replace('#&([A-za-z])(?:acute|cedil|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+        $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
+        $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
+        
+        $str= strtolower($str);
+
+        return $str;
     }
 }

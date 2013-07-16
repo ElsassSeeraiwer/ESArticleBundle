@@ -50,7 +50,7 @@
             articleEditionStatus = window.localStorage.getItem('articleEditionStatus');
 
             {% if tags == true %}
-            $(".editTagsForm").select2({tags:[]});
+            $(".editTagsForm").select2({tags:{{ taglist|json_encode|raw }} });
             $(".editTagsFormSave").show();
             {% endif %}
 

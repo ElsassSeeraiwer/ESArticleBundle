@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('domain')->defaultValue('articles')->end()
                 ->scalarNode('default_authorized_role')->defaultValue('ROLE_SUPER_ADMIN')->end()
                 ->scalarNode('tagpath')->defaultValue('')->end()
-                ->scalarNode('tagpathparams')->defaultValue("{'tags': '#tags#'}")->end()
+                //->variableNode('tagpathparams')->defaultValue(array('tags'=> '#tags#'))->end()
                 ->arrayNode('locales')
                     ->prototype('scalar')->end()
                     ->defaultValue(array('en', 'fr'))

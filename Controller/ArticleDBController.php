@@ -173,6 +173,11 @@ class ArticleDBController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $clientTagList = $this->getRequest()->request->get('tags');
+        foreach ($clientTagList as $key => $value) 
+        {
+            $clientTagList[$key] = $this->wd_remove_accents($value);
+        }
+
         $serverTags = $article->getTags();
         $serverTagList = array();
 
@@ -226,4 +231,17 @@ class ArticleDBController extends Controller
         return true;
     }
 
+    private function wd_remove_accents($str, $charset='utf-8')
+    {
+        $str = ereg_replace(' ','-',$str);
+        $str = htmlentities($str, ENT_NOQUOTES, $charset);
+        
+        $str = preg_replace('#&([A-za-z])(?:acute|cedil|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+        $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
+        $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
+        
+        $str= strtolower($str);
+        
+        return $str;
+    }
 }
