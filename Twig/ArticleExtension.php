@@ -58,13 +58,17 @@ class ArticleExtension extends \Twig_Extension
     {
         //$content_css = $this->container->getParameter('elsass_seeraiwer_es_article.content_css');
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
+        $tagpath = $this->container->getParameter('elsass_seeraiwer_es_article.tagpath');
+        $tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
 
         $content = $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:articleScript.html.twig', array(
             'authorized_role'   => $authorized_role,
             //'content_css'       => $content_css,
             'jQuery'            => $jquery,
             'tinyMCE'           => $tinymce,
-            'tags'              => $tags
+            'tags'              => $tags,
+            'tagpath'           => $tagpath,
+            'tagpathparams'     => $tagpathparams,
         ));
 
         return $content;
@@ -81,6 +85,8 @@ class ArticleExtension extends \Twig_Extension
         }
 
         if($authorized_role == '')$authorized_role = $this->container->getParameter('elsass_seeraiwer_es_article.default_authorized_role');
+        $tagpath = $this->container->getParameter('elsass_seeraiwer_es_article.tagpath');
+        $tagpathparams = $this->container->getParameter('elsass_seeraiwer_es_article.tagpathparams');
 
         $content = $this->getArticleContent($string, $article);
 
@@ -90,6 +96,8 @@ class ArticleExtension extends \Twig_Extension
             'classes'           => $classes,
             'tags'              => $tags,
             'authorized_role'   => $authorized_role,
+            'tagpath'           => $tagpath,
+            'tagpathparams'     => $tagpathparams,
         ));
     }
 

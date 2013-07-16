@@ -4,7 +4,7 @@
 {% if tags == true %}
 <div id="{{ article.slug }}_tags_view" class="articles_tags_view">
 	{% for tag in article.tags %}
-		<a class="btn btn-info" href="#" title="{{ tag }}">#{{ tag }}</a>
+		<a class="btn btn-info" href="{% if tagpath == '' %}#{% else %}{{ path(tagpath, {'tags': tag}) }}{% endif %}" title="{{ tag }}">#{{ tag }}</a>
 	{% endfor %}
 	{% if is_granted(authorized_role) %}
 	<a class="btn btn-warning btn-edittags" href="#" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
