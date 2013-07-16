@@ -74,6 +74,20 @@ class Article
      */
     private $tags;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstUsername", type="string", length=255, nullable=true)
+     */
+    private $firstUsername;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastUsername", type="string", length=255, nullable=true)
+     */
+    private $lastUsername;
+
     public function __construct() {
         $this->trans = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -273,6 +287,18 @@ class Article
         return false;
     }
 
+    public function getContentAuthorsByLocale($locale)
+    {
+        $trans = $this->getTransByLocale($locale);
+
+        $authors = array();
+        $authors['createdBy'] = $trans->getFirstUsername();
+        $authors['modifiedBy'] = $trans->getLastUsername();
+        $authors['modifiedDate'] = $trans->getModifyDate();
+
+        return $authors;
+    }
+
     /**
      * Set fixedSlug
      *
@@ -329,5 +355,51 @@ class Article
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set firstUsername
+     *
+     * @param string $firstUsername
+     * @return Article
+     */
+    public function setFirstUsername($firstUsername)
+    {
+        $this->firstUsername = $firstUsername;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstUsername
+     *
+     * @return string 
+     */
+    public function getFirstUsername()
+    {
+        return $this->firstUsername;
+    }
+
+    /**
+     * Set lastUsername
+     *
+     * @param string $lastUsername
+     * @return Article
+     */
+    public function setLastUsername($lastUsername)
+    {
+        $this->lastUsername = $lastUsername;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastUsername
+     *
+     * @return string 
+     */
+    public function getLastUsername()
+    {
+        return $this->lastUsername;
     }
 }

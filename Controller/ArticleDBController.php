@@ -53,8 +53,12 @@ class ArticleDBController extends Controller
      */
     public function addAction(Request $request)
     {
+        $user = $this->getUser();
+
         $article = new Article();
         $article->setStatus('draft');
+        $article->setFirstUsername($user->getUsername());
+        $article->setLastUsername($user->getUsername());
 
         $form = $this->createForm(new ArticleType(), $article, array(
             'action' => $this->generateUrl('elsassseeraiwer_esarticle_articledb_add'),
@@ -113,12 +117,17 @@ class ArticleDBController extends Controller
     {
         $content = $this->getRequest()->request->get('content');
         $locale = $this->getRequest()->request->get('locale');
+        $user = $this->getUser();
 
         $articleTranslation = $article->getTransByLocale($locale);
         $articleTranslation->setContent($content);
+        $articleTranslation->setLastUsername($user->getUsername());
+
+        $article->setLastUsername($user->getUsername());
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($articleTranslation);
+        $em->persist($article);
         $em->flush();
 
         return new Response("OK");
@@ -133,8 +142,10 @@ class ArticleDBController extends Controller
     public function modifyTitleAction(Request $request, Article $article)
     {
         $newTitle = $this->getRequest()->request->get('title');
+        $user = $this->getUser();
 
         $article->setTitle($newTitle);
+        $article->setLastUsername($user->getUsername());
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($article);
@@ -152,8 +163,10 @@ class ArticleDBController extends Controller
     public function modifyStatusAction(Request $request, Article $article)
     {
         $newStatus = $this->getRequest()->request->get('status');
+        $user = $this->getUser();
 
         $article->setStatus($newStatus);
+        $article->setLastUsername($user->getUsername());
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($article);
@@ -171,8 +184,9 @@ class ArticleDBController extends Controller
     public function modifyTagsAction(Request $request, Article $article)
     {
         $em = $this->getDoctrine()->getManager();
-
         $clientTagList = $this->getRequest()->request->get('tags');
+        $user = $this->getUser();
+
         foreach ($clientTagList as $key => $value) 
         {
             $clientTagList[$key] = $this->wd_remove_accents($value);
@@ -208,6 +222,8 @@ class ArticleDBController extends Controller
 
             $article->addTag($newTag);
         }
+
+        $article->setLastUsername($user->getUsername());
         
         $em->persist($article);
         $em->flush();
@@ -218,12 +234,16 @@ class ArticleDBController extends Controller
     protected function createLocaleTranslations(Article $article, Array $locales)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
         foreach ($locales as $locale)
         {
             $trans = new ArticleTranslation();
             $trans->setLocale($locale);
             $trans->setContent('<h2>'.$article->getTitle().'</h2>');
             $trans->setArticle($article);
+            $trans->setFirstUsername($user->getUsername());
+            $trans->setLastUsername($user->getUsername());
 
             $em->persist($trans);
             $em->flush();

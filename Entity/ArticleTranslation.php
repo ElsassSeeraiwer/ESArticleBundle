@@ -53,6 +53,13 @@ class ArticleTranslation
     /**
      * @var string
      *
+     * @ORM\Column(name="firstUsername", type="string", length=255, nullable=true)
+     */
+    private $firstUsername;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="lastUsername", type="string", length=255, nullable=true)
      */
     private $lastUsername;
@@ -226,5 +233,28 @@ class ArticleTranslation
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Set firstUsername
+     *
+     * @param string $firstUsername
+     * @return ArticleTranslation
+     */
+    public function setFirstUsername($firstUsername)
+    {
+        $this->firstUsername = $firstUsername;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstUsername
+     *
+     * @return string 
+     */
+    public function getFirstUsername()
+    {
+        return $this->firstUsername;
     }
 }

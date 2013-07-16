@@ -2,6 +2,7 @@
 	{{ content|raw }}
 </article>
 {% if tags == true %}
+<p class="article-info"><span class="label label-success">Auteur</span> <strong>{{ authors.createdBy }}</strong> | <span class="label label-warning">Dernière modification</span> <strong>{{ authors.modifiedBy }}</strong> <em>({{ authors.modifiedDate|date('d-m-Y H:i') }})</em></p>
 <div id="{{ article.slug }}_tags_view" class="articles_tags_view">
 	{% for tag in article.tags %}
 		<a class="btn btn-info" href="{% if tagpath == '' %}#{% else %}{{ path(tagpath, {'tags': tag}) }}{% endif %}" title="{{ tag }}">#{{ tag }}</a>

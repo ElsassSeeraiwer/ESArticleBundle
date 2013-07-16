@@ -97,6 +97,8 @@ class ArticleExtension extends \Twig_Extension
 
         $content = $this->getArticleContent($string, $article);
 
+        $authors = $article->getContentAuthorsByLocale($this->request->getLocale());
+
         return $env->render('ElsassSeeraiwerESArticleBundle:ArticleDB:article.html.twig', array(
             'article'           => $article, 
             'content'           => $content,
@@ -104,6 +106,7 @@ class ArticleExtension extends \Twig_Extension
             'tags'              => $tags,
             'authorized_role'   => $authorized_role,
             'tagpath'           => $tagpath,
+            'authors'           => $authors,
             //'tagpathparams'     => $tagpathparams,
         ));
     }

@@ -19,7 +19,8 @@ class TagRepository extends EntityRepository
 		$query = $em->createQuery(
 			"SELECT t, SIZE(t.articles) as a
 			FROM ElsassSeeraiwerESArticleBundle:Tag t
-			WHERE SIZE(t.articles) > 0
+			LEFT JOIN t.articles art
+			WHERE SIZE(t.articles) > 0 AND art.status = 'published'
 			ORDER BY a DESC");
 
 		$result = $query->getResult();

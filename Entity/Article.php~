@@ -74,6 +74,20 @@ class Article
      */
     private $tags;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstUsername", type="string", length=255, nullable=true)
+     */
+    private $firstUsername;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastUsername", type="string", length=255, nullable=true)
+     */
+    private $lastUsername;
+
     public function __construct() {
         $this->trans = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -294,5 +308,40 @@ class Article
     public function getFixedSlug()
     {
         return $this->fixedSlug;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags
+     * @return Article
+     */
+    public function addTag(\ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+        $tags->addArticle($this); // synchronously updating inverse side
+    
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags
+     */
+    public function removeTag(\ElsassSeeraiwer\ESArticleBundle\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+        $tags->removeArticle($this); // synchronously updating inverse side
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

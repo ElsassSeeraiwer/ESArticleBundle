@@ -53,6 +53,13 @@ class ArticleTranslation
     /**
      * @var string
      *
+     * @ORM\Column(name="firstUsername", type="string", length=255, nullable=true)
+     */
+    private $firstUsername;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="lastUsername", type="string", length=255, nullable=true)
      */
     private $lastUsername;
