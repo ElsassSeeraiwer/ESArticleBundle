@@ -113,6 +113,7 @@ class Tag
     private function wd_remove_accents($str, $charset='utf-8')
     {
         $str = ereg_replace(' ','-',$str);
+        $str = ereg_replace('/','-',$str);
         $str = htmlentities($str, ENT_NOQUOTES, $charset);
         
         $str = preg_replace('#&([A-za-z])(?:acute|cedil|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);

@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
+	public function getAllByCount()
+	{
+		$em = $this->getEntityManager();
+
+		$query = $em->createQuery(
+			"SELECT t, SIZE(t.articles) as a
+			FROM ElsassSeeraiwerESArticleBundle:Tag t
+			WHERE SIZE(t.articles) > 0
+			ORDER BY a DESC");
+
+		$result = $query->getResult();
+
+		return $result;
+	}
 }
