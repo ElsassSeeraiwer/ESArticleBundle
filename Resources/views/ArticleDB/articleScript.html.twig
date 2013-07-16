@@ -15,6 +15,7 @@
 
     <script language="javascript" type="text/javascript">
         var updateContentPath = {{ path("elsassseeraiwer_esarticle_articledb_modifycontent", {'slug': 'SLUG'})|json_encode|raw }};
+        var deleteArticlePath = {{ path("elsassseeraiwer_esarticle_articledb_remove", {"slug": 'SLUG'})|json_encode|raw }};
         {% if tags == true %}
         var modifyTagsPath = {{ path("elsassseeraiwer_esarticle_articledb_modifytags", {"slug": 'SLUG'})|json_encode|raw }};
 
@@ -33,9 +34,21 @@
         }
         {% endif %}
 
+        function deleteArticle(slug)
+        {
+            var path = deleteArticlePath.replace('SLUG',slug);
+
+            $.ajax(path, {
+                type: 'POST',
+                complete: function() {
+                    window.location.reload();
+                }
+            });
+        }
+
         $(document).ready(function() {
             articleEditionStatus = window.localStorage.getItem('articleEditionStatus');
-            console.log(articleEditionStatus);
+
             {% if tags == true %}
             $(".editTagsForm").select2({tags:[]});
             $(".editTagsFormSave").show();
@@ -97,12 +110,6 @@
     {% endif %}
 
     <script language="javascript" type="text/javascript">
-        $(document).ready(function() {
-            {% if tags == true %}
-                $(".editTagsForm").remove();
-                $('.editTagsFormSave').remove();
-                $('.btn-edittags').remove();
-            {% endif %}
-        });
+        $(document).ready(function() {});
     </script>
 {% endif %}
