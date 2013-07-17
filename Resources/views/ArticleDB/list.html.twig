@@ -164,7 +164,7 @@
         $(document).ready(function() {
             $('img.sortImg.'+currentWay+'.'+currentField).show();
 
-            $(".editTagsForm").select2({tags:[]});
+            $(".editTagsForm").select2({tags:{{ taglist|json_encode|raw }} });
 
             $('input.editTitleForm')
                 .blur(function() {

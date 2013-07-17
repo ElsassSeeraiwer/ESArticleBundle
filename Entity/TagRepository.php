@@ -27,4 +27,19 @@ class TagRepository extends EntityRepository
 
 		return $result;
 	}
+
+	public function getAllUnpublishedByCount()
+	{
+		$em = $this->getEntityManager();
+
+		$query = $em->createQuery(
+			"SELECT t, SIZE(t.articles) as a
+			FROM ElsassSeeraiwerESArticleBundle:Tag t
+			LEFT JOIN t.articles art
+			ORDER BY a DESC");
+
+		$result = $query->getResult();
+
+		return $result;
+	}
 }

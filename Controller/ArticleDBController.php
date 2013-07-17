@@ -30,11 +30,17 @@ class ArticleDBController extends Controller
         $em = $this->container->get('doctrine')->getEntityManager('default');
 
         $articles = $em->getRepository('ElsassSeeraiwerESArticleBundle:Article')->findAllOrderBy($field, $way);
+        $tagEntities = $em->getRepository('ElsassSeeraiwerESArticleBundle:Tag')->findAll();
+        $taglist = array();
+        foreach ($tagEntities as $tagElem) {
+            $taglist[] = $tagElem->getName();
+        }
 
         return array(
             'articles'  => $articles,
             'field'     => $field,
             'way'       => $way,
+            'taglist'   => $taglist,
         );
     }
 
