@@ -39,6 +39,13 @@ class Article
     private $modifyDate;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publication_date", type="datetime", nullable=true)
+     */
+    private $publicationDate;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="text")
@@ -401,5 +408,28 @@ class Article
     public function getLastUsername()
     {
         return $this->lastUsername;
+    }
+
+    /**
+     * Set publicationDate
+     *
+     * @param \DateTime $publicationDate
+     * @return Article
+     */
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get publicationDate
+     *
+     * @return \DateTime 
+     */
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
     }
 }

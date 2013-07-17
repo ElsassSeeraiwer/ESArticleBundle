@@ -110,6 +110,21 @@ class Tag
         return $this->articles;
     }
 
+    public function getArticlesLength()
+    {
+        return count($this->articles);
+    }
+
+    public function getPublishedArticlesLength()
+    {
+        $i = 0;
+
+        foreach ($this->articles as $article) {
+            if($article->getStatus() == 'published'){ $i++; }
+        }
+        return $i;
+    }
+
     private function wd_remove_accents($str, $charset='utf-8')
     {
         $str = ereg_replace(' ','-',$str);

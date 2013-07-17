@@ -21,8 +21,8 @@ use ElsassSeeraiwer\ESArticleBundle\Entity\ArticleTranslation;
 class ArticleDBController extends Controller
 {
     /**
-     * @Route("/list/", defaults={"field" = "status", "way" = "ASC"})
-     * @Route("/list/orderby/{field}/{way}/", defaults={"field" = "status", "way" = "ASC"}, name="elsassseeraiwer_esarticle_articledb_list_ordered")
+     * @Route("/list/", defaults={"field" = "publicationDate", "way" = "DESC"})
+     * @Route("/list/orderby/{field}/{way}/", defaults={"field" = "publicationDate", "way" = "DESC"}, name="elsassseeraiwer_esarticle_articledb_list_ordered")
      * @Template()
      */
     public function listAction($field, $way)
@@ -65,6 +65,7 @@ class ArticleDBController extends Controller
         $article->setStatus('draft');
         $article->setFirstUsername($user->getUsername());
         $article->setLastUsername($user->getUsername());
+        $article->setPublicationDate(new \DateTime('now'));
 
         $form = $this->createForm(new ArticleType(), $article, array(
             'action' => $this->generateUrl('elsassseeraiwer_esarticle_articledb_add'),
@@ -133,6 +134,27 @@ class ArticleDBController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($articleTranslation);
+        $em->persist($article);
+        $em->flush();
+
+        return new Response("OK");
+    }
+
+    /**
+     * @Route("/modify/{slug}/publication-date/")
+     * @ParamConverter("article", class="ElsassSeeraiwerESArticleBundle:Article")
+     * @Template()
+     * @Method("POST")
+     */
+    public function modifyPublicationDateAction(Request $request, Article $article)
+    {
+        $publicationdate = $this->getRequest()->request->get('publicationdate');
+        $user = $this->getUser();
+
+        $article->setPublicationDate(new \DateTime($publicationdate));
+        $article->setLastUsername($user->getUsername());
+        
+        $em = $this->getDoctrine()->getManager();
         $em->persist($article);
         $em->flush();
 

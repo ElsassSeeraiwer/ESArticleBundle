@@ -234,4 +234,27 @@ class ArticleTranslation
     {
         return $this->article;
     }
+
+    /**
+     * Set firstUsername
+     *
+     * @param string $firstUsername
+     * @return ArticleTranslation
+     */
+    public function setFirstUsername($firstUsername)
+    {
+        $this->firstUsername = $firstUsername;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstUsername
+     *
+     * @return string 
+     */
+    public function getFirstUsername()
+    {
+        return $this->firstUsername;
+    }
 }
