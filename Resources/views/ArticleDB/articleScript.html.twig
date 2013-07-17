@@ -72,6 +72,7 @@
                     tools: "{{ tinymce.tools }}",
                     nonbreaking_force_tab: {{ tinymce.nonbreaking_force_tab }},
                     save_enablewhendirty: {{ tinymce.save_enablewhendirty }},
+                    extended_valid_elements: "{{ tinymce.extended_valid_elements }}",
                     save_onsavecallback: function() {
                         tinymce.triggerSave();
                         var path = updateContentPath.replace('SLUG',$('#'+this.id).data('slug'));

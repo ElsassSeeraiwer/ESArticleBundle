@@ -50,6 +50,7 @@ class ArticleExtension extends \Twig_Extension
                 'nonbreaking_force_tab' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.nonbreaking_force_tab'),
                 'save_enablewhendirty' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.save_enablewhendirty'),
                 'style_formats' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.style_formats'),
+                'extended_valid_elements' => $this->container->getParameter('elsass_seeraiwer_es_article.tinymce.extended_valid_elements'),
             ),
         );
     }

@@ -39,6 +39,7 @@ class ElsassSeeraiwerESArticleExtension extends Extension
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.toolbar2', $config['tinymce']['toolbar2']);
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.contextmenu', $config['tinymce']['contextmenu']);
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.tools', $config['tinymce']['tools']);
+        $container->setParameter('elsass_seeraiwer_es_article.tinymce.extended_valid_elements', $config['tinymce']['extended_valid_elements']);
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.nonbreaking_force_tab', $config['tinymce']['nonbreaking_force_tab']);
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.save_enablewhendirty', $config['tinymce']['save_enablewhendirty']);
         $container->setParameter('elsass_seeraiwer_es_article.tinymce.style_formats', trim($config['tinymce']['style_formats']));

@@ -42,6 +42,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('tools')->defaultValue('inserttable')->cannotBeEmpty()->end()
                         ->booleanNode('nonbreaking_force_tab')->defaultTrue()->end()
                         ->booleanNode('save_enablewhendirty')->defaultTrue()->end()
+                        ->scalarNode('extended_valid_elements')->defaultValue('pre[class]')->end()
                         ->scalarNode('style_formats')->defaultValue("[
                             {title: 'Titre 1', block: 'h2'},
                             {title: 'Titre 2', block: 'h3'},
