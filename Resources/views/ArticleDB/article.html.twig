@@ -8,8 +8,8 @@
 		<a class="btn btn-info" href="{% if tagpath == '' %}#{% else %}{{ path(tagpath, {'tags': tag}) }}{% endif %}" title="{{ tag }}">#{{ tag }}</a>
 	{% endfor %}
 	{% if is_granted(authorized_role) %}
-	<a class="btn btn-warning btn-edittags" href="#" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
-	<a class="btn btn-danger btn-deleteArticle" href="#" title="Delete article" onclick="deleteArticle('{{ article.slug }}')" style="float:right;">Delete !</a>
+	<a class="btn btn-warning btn-edittags" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
+	<a class="btn btn-danger btn-deleteArticle" title="Delete article" onclick="deleteArticle('{{ article.slug }}')" style="float:right;">Delete !</a>
 	{% endif %}
 </div>
 	{% if is_granted(authorized_role) %}
