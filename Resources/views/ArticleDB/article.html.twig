@@ -5,17 +5,17 @@
 <p class="article-info"><span class="label label-success">Auteur</span> <strong>{{ authors.createdBy }}</strong> | <span class="label label-warning">Dernière modification</span> <strong>{{ authors.modifiedBy }}</strong> <em>({{ authors.modifiedDate|date('d-m-Y H:i') }})</em></p>
 <div id="{{ article.slug }}_tags_view" class="articles_tags_view">
 	{% for tag in article.tags %}
-		<a class="btn btn-info" href="{% if tagpath == '' %}#{% else %}{{ path(tagpath, {'tags': tag}) }}{% endif %}" title="{{ tag }}">#{{ tag }}</a>
+		<a class="btn btn-info btn-small" href="{% if tagpath == '' %}#{% else %}{{ path(tagpath, {'tags': tag}) }}{% endif %}" title="{{ tag }}">#{{ tag }}</a>
 	{% endfor %}
 	{% if is_granted(authorized_role) %}
-	<a class="btn btn-warning btn-edittags" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
-	<a class="btn btn-danger btn-deleteArticle" title="Delete article" onclick="deleteArticle('{{ article.slug }}')" style="float:right;">Delete !</a>
+	<a class="btn btn-warning btn-edittags btn-small" title="Edit tags" onclick="$('#{{ article.slug }}_tags_view').hide();$('#{{ article.slug }}_tags_edit').show();">+/-</a>
+	<a class="btn btn-danger btn-deleteArticle btn-small" title="Delete article" onclick="deleteArticle('{{ article.slug }}')" style="float:right;">Delete !</a>
 	{% endif %}
 </div>
 	{% if is_granted(authorized_role) %}
 	<div id="{{ article.slug }}_tags_edit" class="articles_tags_edit" style="display:none;">
-		<input type="text" data-slug="{{ article.slug }}" data-origin="{{ article.tags|join(',') }}" name="{{ article.id }}_tags" id="{{ article.slug }}_tags" class="editTagsForm" style="width:70%;" value="{{ article.tags|join(',') }}">
-		<input type="button" class="editTagsFormSave" value="{{ 'Save'|trans({}, 'ESArticle') }}" onclick="modifyTags('{{ article.slug }}')" style="display:none;width:65px;margin:5px 0;color:black;"/>
+		<input type="text" data-slug="{{ article.slug }}" data-origin="{{ article.tags|join(',') }}" name="{{ article.id }}_tags" id="{{ article.slug }}_tags" class="editTagsForm" style="width:90%;" value="{{ article.tags|join(',') }}">
+		<input type="button" class="editTagsFormSave btn btn-warning btn-small" value="{{ 'Save'|trans({}, 'ESArticle') }}" onclick="modifyTags('{{ article.slug }}')" style="display:none;margin:5px 0;"/>
 	</div>
 	{% endif %}
 {% endif %}
