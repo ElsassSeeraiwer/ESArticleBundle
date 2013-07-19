@@ -6,7 +6,7 @@
 
     
     <parameters>
-        <parameter key="elsass_seeraiwer_es_article.article.class">ElsassSeeraiwer\ESArticleBundle\Controller\ArticleController</parameter>
+        <parameter key="elsass_seeraiwer_es_article.article.class">ElsassSeeraiwer\ESArticleBundle\Controller\ArticleDBController</parameter>
     </parameters>
 
     <services>

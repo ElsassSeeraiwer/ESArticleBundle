@@ -173,7 +173,10 @@
         $(document).ready(function() {
             $('img.sortImg.'+currentWay+'.'+currentField).show();
 
-            $(".editTagsForm").select2({tags:{{ taglist|json_encode|raw }} });
+            $(".editTagsForm").select2({
+                tags:{{ taglist|json_encode|raw }},
+                tokenSeparators: [",","/"] 
+            });
 
             $('input.editTitleForm')
                 .blur(function() {

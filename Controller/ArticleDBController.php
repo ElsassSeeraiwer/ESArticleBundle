@@ -84,12 +84,53 @@ class ArticleDBController extends Controller
 
             $this->createLocaleTranslations($article, $locales);
 
-            return $this->redirect($this->generateUrl('elsassseeraiwer_esarticle_articledb_list'));
+            return $this->redirect($this->generateUrl('elsassseeraiwer_esarticle_articledb_get', array('slug' => $article->getSlug())));
         }
 
         return array(
             'form' => $form->createView()
         );
+    }
+
+    /**
+     * @Route("/add/{titleTags}/")
+     * @Template()
+     */
+    public function addByTitleAction($titleTags)
+    {
+        $user = $this->getUser();
+
+        $titleTagsTab = explode('/', str_replace(',', '/', $titleTags));
+
+        $article = new Article();
+        $article->setStatus('draft');
+        $article->setFirstUsername($user->getUsername());
+        $article->setLastUsername($user->getUsername());
+        $article->setPublicationDate(new \DateTime('now'));
+        $article->setTitle($titleTagsTab[0]);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+        
+        $Container = $this->get('service_container');
+        $locales = $Container->getParameter('elsass_seeraiwer_es_article.locales');
+
+        $this->createLocaleTranslations($article, $locales);
+
+        
+        if(count($titleTagsTab) > 1)
+        {
+            $clientTagList = array();
+            for($i=1; $i<count($titleTagsTab); $i++)
+            {
+                $clientTagList[] = $titleTagsTab[$i];
+            }
+
+            $this->processModifyTags($article, $clientTagList);
+        }
+
+        return $this->redirect($this->generateUrl('elsassseeraiwer_esarticle_articledb_get', array('slug' => $article->getSlug())));
     }
 
     /**
@@ -211,8 +252,16 @@ class ArticleDBController extends Controller
      */
     public function modifyTagsAction(Request $request, Article $article)
     {
+        $tags = $this->getRequest()->request->get('tags');
+
+        $this->processModifyTags($article, $tags);
+
+        return new Response("OK");
+    }
+
+    protected function processModifyTags(Article $article, $clientTagList)
+    {
         $em = $this->getDoctrine()->getManager();
-        $clientTagList = $this->getRequest()->request->get('tags');
         $user = $this->getUser();
 
         foreach ($clientTagList as $key => $value) 
@@ -255,8 +304,6 @@ class ArticleDBController extends Controller
         
         $em->persist($article);
         $em->flush();
-
-        return new Response("OK");
     }
 
     protected function createLocaleTranslations(Article $article, Array $locales)
